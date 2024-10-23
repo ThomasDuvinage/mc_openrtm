@@ -193,6 +193,10 @@ protected:
   OutPort<TimedDoubleSeq> m_pgainsOutOut;
   TimedDoubleSeq m_dgainsOut;
   OutPort<TimedDoubleSeq> m_dgainsOutOut;
+  TimedBooleanSeq m_torqueModeOut;
+  OutPort<TimedBooleanSeq> m_torqueModeOutOut;
+  TimedDoubleSeq m_tauOut;
+  OutPort<TimedDoubleSeq> m_tauOutOut;
 
   // </rtc-template>
 

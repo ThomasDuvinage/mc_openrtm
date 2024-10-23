@@ -404,7 +404,8 @@ RTC::ReturnCode_t MCControl::onDeactivated(RTC::UniqueId ec_id)
   {
     if(!close_iob())
     {
-      failed_iob("close_iob", "MCControl::onDeactivated");
+      failed_iob("close_iob", "MCControl::
+onDeactivated");
       mc_rtc::log::error_and_throw<std::runtime_error>("[mc_openrtm] Could not close IOB.");
     }
     else
@@ -653,9 +654,7 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
       if(controller.run())
       {
         m_qOut.data.length(m_qIn.data.length());
-        m_tauOut.data.length(m_qIn.data.length());
-	m_torqueModeOut.data.length(m_qIn.data.length());
-	const auto & ref_joint_order = controller.robot().refJointOrder();
+        const auto & ref_joint_order = controller.robot().refJointOrder();
         const auto & qOut = controller.robot().mbc().q;
 	const auto & tauOut = controller.robot().mbc().jointTorque;
         for(size_t i = 0; i < ref_joint_order.size(); ++i)
@@ -671,9 +670,8 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
             m_qOut.data[i] = m_qIn.data[i];
             m_tauOut.data[i] = 0.0;
           }
-	       
 	  if (controller.controller().datastore().has("ControlMode"))
-	  {     
+	  {
 	    m_torqueModeOut.data[i] = controller.controller().datastore().get<std::string>("ControlMode").compare("Torque") == 0;
 	  }
 	  else
@@ -713,13 +711,11 @@ RTC::ReturnCode_t MCControl::onExecute(RTC::UniqueId ec_id)
     {
       init = false;
       m_qOut = m_qIn;
-      //const auto & ref_joint_order = controller.robot().refJointOrder();
-      //for(size_t i = 0; i < ref_joint_order.size(); ++i)
-      //{
-      //  m_torqueModeOut.data[i] = false;
-      //}
-
-      // mc_rtc::log::info("je sius la");
+      const auto & ref_joint_order = controller.robot().refJointOrder();
+      for(size_t i = 0; i < ref_joint_order.size(); ++i)
+      {
+        m_torqueModeOut.data[i] = false;
+      }
       
       /* Still run controller.run() in order to handle some service calls */
       controller.run();
