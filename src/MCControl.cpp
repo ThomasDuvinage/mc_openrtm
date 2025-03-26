@@ -19,9 +19,9 @@
 #endif
 #include "MCControl.h"
 
-#include <sys/time.h>
 #include <fstream>
 #include <iomanip>
+#include <sys/time.h>
 
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/logging.h>
@@ -145,18 +145,18 @@ MCControl::MCControl(RTC::Manager* manager)
   }
 
   // create datastore calls for reading/writing servo pd gains
-  controller.controller().datastore().make_call(
-      controller.robot().name() + "::GetPDGains",
-      [this](std::vector<double> & p, std::vector<double> & d) { return getServoGains(p, d); });
-  controller.controller().datastore().make_call(
-      controller.robot().name() + "::GetPDGainsByName",
-      [this](const std::string & jn, double & p, double & d) { return getServoGainsByName(jn, p, d); });
-  controller.controller().datastore().make_call(
-      controller.robot().name() + "::SetPDGains",
-      [this](const std::vector<double> & p, const std::vector<double> & d) { return setServoGains(p, d); });
-  controller.controller().datastore().make_call(
-      controller.robot().name() + "::SetPDGainsByName",
-      [this](const std::string & jn, double p, double d) { return setServoGainsByName(jn, p, d); });
+  controller.controller().datastore().make_call(controller.robot().name() + "::GetPDGains",
+                                                [this](std::vector<double> & p, std::vector<double> & d)
+                                                { return getServoGains(p, d); });
+  controller.controller().datastore().make_call(controller.robot().name() + "::GetPDGainsByName",
+                                                [this](const std::string & jn, double & p, double & d)
+                                                { return getServoGainsByName(jn, p, d); });
+  controller.controller().datastore().make_call(controller.robot().name() + "::SetPDGains",
+                                                [this](const std::vector<double> & p, const std::vector<double> & d)
+                                                { return setServoGains(p, d); });
+  controller.controller().datastore().make_call(controller.robot().name() + "::SetPDGainsByName",
+                                                [this](const std::string & jn, double p, double d)
+                                                { return setServoGainsByName(jn, p, d); });
 }
 
 MCControl::~MCControl() {}
