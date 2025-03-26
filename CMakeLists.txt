@@ -29,6 +29,25 @@ project(${PROJECT_NAME} CXX)
 find_package(mc_rtc REQUIRED)
 add_required_dependency(hrpsys-base)
 
+find_package(OpenRTM REQUIRED)
+
+if((NOT (OPENRTM_VERSION VERSION_LESS "1.1.0")) AND (OPENRTM_VERSION VERSION_LESS "1.2.0"))
+  set(OPENRTM_IDL_DIR ${OPENRTM_DIR}/include/openrtm-1.1/rtm/idl)
+elseif(NOT (OPENRTM_VERSION VERSION_LESS "1.2.0") AND (OPENRTM_VERSION VERSION_LESS "2.0.0"))
+  set(OPENRTM_IDL_DIR ${OPENRTM_DIR}/include/openrtm-1.2/rtm/idl)
+elseif(NOT (OPENRTM_VERSION VERSION_LESS "2.0.0"))
+  set(OPENRTM_IDL_DIR ${OPENRTM_DIR}/include/openrtm-2.0/rtm/idl)
+else()
+  set(OPENRTM_IDL_DIR ${OPENRTM_DIR}/include/rtm/idl)
+endif()
+
+execute_process(
+  COMMAND pkg-config --variable=idl_dir openhrp3.1
+  OUTPUT_VARIABLE OPENHRP_IDL_DIR
+  RESULT_VARIABLE RESULT
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
 execute_process(
   COMMAND python3 -c "from distutils import sysconfig; print(sysconfig.get_config_var(\"VERSION\"))"
   OUTPUT_VARIABLE PYTHON_VERSION
