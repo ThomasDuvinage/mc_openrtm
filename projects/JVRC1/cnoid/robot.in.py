@@ -6,7 +6,7 @@ import sys
 import math
 
 # path
-sys.path.append("@HRPSYS_BASE_PREFIX@/lib/python2.7/dist-packages/hrpsys")
+sys.path.append("@HRPSYS_BASE_PREFIX@/lib/python3.1/dist-packages/hrpsys")
 sys.path.append(os.getcwd())
 
 # config
