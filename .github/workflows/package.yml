@@ -22,7 +22,7 @@ jobs:
       with-openrtm2: true
       matrix: |
           {
-            "dist": ["focal", "jammy"],
+            "dist": ["jammy"],
             "arch": ["amd64"],
           }
     secrets:
